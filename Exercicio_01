@@ -1,1 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
 
+int error(){
+    perror("fork");
+    exit(1);
+}
+
+int pid_filho(){
+    printf("pid do filho: %d\n", getpid());
+}
+
+int pid_pai(){
+    printf("pid do pai: %d\n", getpid());
+}
+
+int main(void){
+	int i;
+	pid_t pid;
+	
+	if((pid = fork()) < 0){
+		error();
+	}if(pid == 0){
+		pid_filho();
+	}else{
+	    pid_pai();
+	}
+	printf("Esse print sera executado por ambos os processos\n\n");
+	exit(0);
+}
